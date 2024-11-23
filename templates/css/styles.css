@@ -1,0 +1,35 @@
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+.fondo-cabecera{    
+    position:fixed;
+}
+.post-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #ffffff;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.post-card img {
+    width: 100%;
+    height: auto;
+}
+
+.post-card .card-body {
+    padding: 10px;
+}
+
+.post-card .username {
+    font-weight: bold;
+    color: #333;
+}
+
+.post-card .description {
+    color: #555;
+    font-size: 14px;
+}
