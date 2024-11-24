@@ -1,85 +1,140 @@
+# Proyecto de Gestión de Usuarios y Subida de Imágenes con FastAPI
 
-# FastAPI Project
+Este proyecto es una aplicación web desarrollada con **FastAPI** que permite gestionar usuarios y la subida de imágenes. Los usuarios pueden registrarse, iniciar sesión y subir imágenes que se almacenan en el servidor, además de ser procesadas (como redimensionarlas).
 
-Este es un proyecto basado en **FastAPI** que sirve una aplicación web utilizando plantillas HTML. 
+## Requisitos
 
-## Estructura del proyecto
-
-```
-fastapi_project/
-│
-├── clon_instagram.py      # Archivo principal que arranca la aplicación
-├── .env                   # Configuración del entorno
-├── requirements.txt       # Dependencias del proyecto
-├── templates/             # Carpeta que contiene las plantillas HTML
-│   ├── index.html         # Página principal
-│   ├── parts/             # Componentes reutilizables (header, footer)
-│   │   ├── header.html    # Cabecera del sitio
-│   │   └── footer.html    # Pie de página del sitio
-│   ├── css/               # Archivos CSS
-│   │   └── styles.css     # Estilos personalizados
-│   └── js/                # Archivos JavaScript
-│       └── app.js         # Scripts personalizados
-```
+- Python 3.7 o superior
+- FastAPI
+- Uvicorn (para ejecutar el servidor)
+- Pydantic
+- Pillow (para el procesamiento de imágenes)
+- Passlib (para la encriptación de contraseñas)
+- PyJWT (para la generación de tokens JWT)
+- Python-dotenv (para cargar variables de entorno desde un archivo `.env`)
 
 ## Instalación
 
-1. Clona este repositorio:
-   ```bash
-   git clone https://github.com/tu-usuario/tu-proyecto.git
-   ```
+1. Clona el repositorio en tu máquina local:
 
-2. Accede al directorio del proyecto:
-   ```bash
-   cd fastapi_project
-   ```
+    ```bash
+    git clone <url-del-repositorio>
+    cd <nombre-del-repositorio>
+    ```
 
-3. Crea un entorno virtual y actívalo:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # En Windows: venv\Scripts\activate
-   ```
+2. Crea un entorno virtual:
+
+    ```bash
+    python3 -m venv venv
+    ```
+
+3. Activa el entorno virtual:
+
+    - En Linux/macOS:
+
+        ```bash
+        source venv/bin/activate
+        ```
+
+    - En Windows:
+
+        ```bash
+        venv\Scripts\activate
+        ```
 
 4. Instala las dependencias:
-   ```bash
-   pip install -r requirements.txt
-   ```
 
-5. Crea un archivo `.env` en la raíz del proyecto con la configuración básica:
-   ```
-   URL_BASE=http://127.0.0.1:8000/
-   ```
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-6. Ejecuta el servidor:
-   ```bash
-   uvicorn main:app --reload
-   ```
+5. Crea un archivo `.env` con las siguientes variables de entorno:
 
-7. Abre tu navegador y ve a la URL base:
-   ```
-   http://127.0.0.1:8000/
-   ```
+    ```
+    USERS_FILE=usuarios.json
+    SECRET_KEY=mi_clave_secreta
+    ALGORITHM=HS256
+    ```
 
-## Funcionalidades actuales
+6. Ejecuta el servidor de desarrollo:
 
-- Servir una página principal desde `index.html`.
-- Incluir componentes reutilizables como `header.html` y `footer.html`.
-- Servir archivos estáticos (CSS, JS).
+    ```bash
+    uvicorn main:app --reload
+    ```
 
-## Tareas pendientes
+    Esto iniciará el servidor en `http://127.0.0.1:8000`.
 
-- [ ] Implementar autenticación de usuarios.
-- [ ] Crear rutas adicionales (e.g., `/login`, `/upload`).
-- [ ] Añadir validaciones y formularios.
-- [ ] Configurar una base de datos para almacenar información dinámica.
+## Endpoints
 
-## Actualizaciones
+### 1. **Registro de Usuario**
 
-### [Fecha] - Inicialización del proyecto
-- Se creó la estructura básica del proyecto.
-- Se configuró la ruta para la página de inicio (`/`).
-- Se añadió soporte para archivos estáticos y plantillas parciales (`header.html`, `footer.html`).
+**Método:** `POST`  
+**Ruta:** `/register`
 
-### [Fecha] - Mejoras en la plantilla
-- Se añadió un formulario para iniciar sesión (popup).
-- Se añadió un formulario para cargar imágenes (popup).
+Permite registrar un nuevo usuario. Los parámetros a enviar son:
+
+- `username` (str): Nombre de usuario
+- `password` (str): Contraseña
+
+**Respuesta:**  
+- `message`: Mensaje de éxito
+- `id`: ID del usuario registrado
+
+### 2. **Login**
+
+**Método:** `POST`  
+**Ruta:** `/login`
+
+Permite a un usuario iniciar sesión y obtener un token JWT. Los parámetros a enviar son:
+
+- `username` (str): Nombre de usuario
+- `password` (str): Contraseña
+
+**Respuesta:**  
+- `access_token`: Token JWT generado
+- `token_type`: Tipo de token (siempre "bearer")
+
+### 3. **Subir Imagen**
+
+**Método:** `POST`  
+**Ruta:** `/upload-image`
+
+Permite subir una imagen. Los parámetros a enviar son:
+
+- `title` (str): Título de la imagen
+- `image` (archivo): Imagen a cargar
+- `authorization` (str): Token JWT en el encabezado Authorization
+
+**Respuesta:**  
+- `message`: Mensaje de éxito
+- `data`: Información de la imagen subida (nombre, ruta y usuario)
+
+### 4. **Ver Imágenes**
+
+**Método:** `GET`  
+**Ruta:** `/ver_imagenes`
+
+Permite obtener todas las imágenes subidas por los usuarios.
+
+**Respuesta:**  
+- `images`: Lista con la información de todas las imágenes (nombre, ruta y título)
+
+## Estructura de Archivos
+
+- `main.py`: Código principal de la aplicación FastAPI.
+- `functions.py`: Funciones auxiliares (encriptación de contraseñas, manejo de usuarios, generación de tokens).
+- `templates/`: Directorio con los templates HTML.
+- `images/`: Directorio donde se almacenan las imágenes subidas.
+- `imagenes.json`: Archivo JSON que almacena la información de las imágenes subidas.
+- `usuarios.json`: Archivo JSON que almacena los usuarios registrados.
+
+## Notas
+
+- El sistema de autenticación se basa en **JWT** para la protección de los endpoints.
+- Las imágenes subidas se redimensionan a 800x600 píxeles antes de ser almacenadas.
+- Las contraseñas se encriptan utilizando **SHA-256** antes de ser almacenadas.
+
+## Licencia
+
+Este proyecto está bajo la licencia MIT. Consulta el archivo `LICENSE` para más detalles.
+
