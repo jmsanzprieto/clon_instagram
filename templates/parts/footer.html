@@ -1,4 +1,29 @@
 <!-- PIE DE LA PAGINA -->
+    <!-- Register Form -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">Registrar usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Usuario</label>
+                            <input type="email" class="form-control" id="username" placeholder="Ingrese su email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="password" placeholder="Ingrese su contraseña">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Registrar Usuario</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Login -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -11,11 +36,11 @@
                     <form id="loginForm">
                         <div class="mb-3">
                             <label for="username" class="form-label">Usuario</label>
-                            <input type="text" class="form-control" id="username" placeholder="Ingrese su usuario">
+                            <input type="email" class="form-control" id="username_login" placeholder="Ingrese su usuario">
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="password" placeholder="Ingrese su contraseña">
+                            <input type="password" class="form-control" id="password_login" placeholder="Ingrese su contraseña">
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
                     </form>
@@ -23,6 +48,29 @@
             </div>
         </div>
     </div>
+
+
+    <!-- Modal Logout -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">Cerrar sesión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Estás seguro de que deseas cerrar la sesión?</p>
+                    <div class="d-flex justify-content-between">
+                        <!-- Botón Confirmar -->
+                        <button type="button" id="confirmLogout" class="btn btn-danger w-45">Sí, cerrar sesión</button>
+                        <!-- Botón Cancelar -->
+                        <button type="button" class="btn btn-secondary w-45" data-bs-dismiss="modal">No, cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Modal Cargar Imagen -->
     <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
